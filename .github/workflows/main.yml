@@ -1,4 +1,4 @@
-﻿name: Actions 😎
+name: Actions 😎
 
 # only run when pushed to master or main branches
 on:
