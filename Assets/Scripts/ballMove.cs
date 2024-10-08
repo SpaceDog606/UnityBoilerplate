@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ballMove : MonoBehaviour
 {
+    public Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -15,19 +16,19 @@ public class ballMove : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.W))
         {
-            this.transform.position += new Vector3(0, 0.01f, 0);
+            rb.velocity += Vector3.up/70;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            this.transform.position -= new Vector3(0, 0.01f, 0);
+            rb.velocity += Vector3.down/70;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            this.transform.position += new Vector3(0.01f, 0, 0);
+            rb.velocity += Vector3.right/70;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            this.transform.position -= new Vector3(0.01f, 0, 0);
+            rb.velocity += Vector3.left/70;
         }
     }
 }
