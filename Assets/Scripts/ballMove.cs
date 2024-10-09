@@ -4,31 +4,45 @@ using UnityEngine;
 
 public class ballMove : MonoBehaviour
 {
-    public Rigidbody rb;
+    public Rigidbody2D rb;
+    bool IsGrounded;
+
+    private float Move;
+    public float speed;
+    public float jump;
+
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
     }
+ 
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.W))
+        Move = Input.GetAxisRaw("Horizontal");
+        rb.velocity = new Vector2(Move * speed, rb.velocity.y);
+
+        if ((Input.GetButtonDown("Jump") || Input.GetKeyDown("w")) && IsGrounded)
         {
-            rb.velocity += Vector3.up/70;
+            rb.AddForce(new Vector2(rb.velocity.x, jump * 10));
         }
-        if (Input.GetKey(KeyCode.S))
+    }
+    private void OnCollisionEnter2D(Collision2D other) //checks if player is grounded
+    {
+        if (other.gameObject.CompareTag("Ground"))
         {
-            rb.velocity += Vector3.down/70;
+            IsGrounded = true;
         }
-        if (Input.GetKey(KeyCode.D))
+    }
+
+    private void OnCollisionExit2D(Collision2D other) //checks if player is grounded
+    {
+        if (other.gameObject.CompareTag("Ground"))
         {
-            rb.velocity += Vector3.right/70;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb.velocity += Vector3.left/70;
+            IsGrounded= false;
+
         }
     }
 }
