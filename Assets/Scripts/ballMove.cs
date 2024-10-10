@@ -53,6 +53,10 @@ public class ballMove : MonoBehaviour
                 {
                     idle.GetComponent<SpriteRenderer>().flipX = false;
                 }
+                if (rightJump.GetComponent<SpriteRenderer>().flipX == true)
+                {
+                    rightJump.GetComponent<SpriteRenderer>().flipX = false;
+                }
 
             }
             else
@@ -103,6 +107,10 @@ public class ballMove : MonoBehaviour
                 if (idle.GetComponent<SpriteRenderer>().flipX == false)
                 {
                     idle.GetComponent<SpriteRenderer>().flipX = true;
+                }
+                if (rightJump.GetComponent<SpriteRenderer>().flipX == false)
+                {
+                    rightJump.GetComponent<SpriteRenderer>().flipX = true;
                 }
             }
             else

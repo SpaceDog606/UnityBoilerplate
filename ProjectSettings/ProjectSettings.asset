@@ -805,11 +805,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: 4d669ae7-f7fb-45bb-9634-ce598df52666
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: UnityBoilerplate
+  organizationId: unity_52b33ba41e6fac00dc1d
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

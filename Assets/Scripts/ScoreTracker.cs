@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ScoreTracker : MonoBehaviour
 {
@@ -16,10 +17,17 @@ public class ScoreTracker : MonoBehaviour
     public int frameTracker;
     public GameObject inactiveFountain;
     public GameObject activeFountain;
+    public bool deadPlayer;
+    public bool dying;
+    public GameObject deathAnimation;
+    public GameObject deathCam;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
+        deadPlayer = false;
+        dying = false;
         addScore();
         storedScoreText.text = "0 / " + neededScore.ToString();
         frameTracker = 0;
@@ -30,9 +38,22 @@ public class ScoreTracker : MonoBehaviour
     void Update()
     {
         frameTracker++;
-        if (frameTracker >= 100)
+        if (frameTracker >= 5000)
         {
             frameTracker = 0;
+        }
+        if (deadPlayer && dying)
+        {
+            frameTracker = 0;
+            dying = false;
+            Instantiate(deathAnimation, transform.position, transform.rotation);
+            Instantiate(deathCam, transform.position, transform.rotation);
+            Destroy(player);
+        }
+        if (frameTracker >= 1250)
+        {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
         }
     }
 
@@ -61,6 +82,15 @@ public class ScoreTracker : MonoBehaviour
                 }
                 frameTracker = 0;
             }
+        }
+        if (other.gameObject.CompareTag("PlayerKiller"))
+        {
+            if (!deadPlayer)
+            {
+                deadPlayer = true;
+                dying = true;
+            }
+
         }
     }
     void addScore()
