@@ -22,6 +22,15 @@ public class ScoreTracker : MonoBehaviour
     public GameObject deathAnimation;
     public GameObject deathCam;
     public GameObject player;
+    public GameObject animation1;
+    public GameObject animation2;
+    public GameObject animation3;
+    public GameObject animation4;
+    public GameObject animation5;
+    public GameObject camera;
+    public int winTimer;
+    public bool gameWon;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,12 +40,23 @@ public class ScoreTracker : MonoBehaviour
         addScore();
         storedScoreText.text = "0 / " + neededScore.ToString();
         frameTracker = 0;
+        deathCam.SetActive(false);
+        gameWon = false;
+        winTimer = 0;
     }
     
 
     // Update is called once per frame
     void Update()
     {
+        if (gameWon)
+        {
+            winTimer++;
+        }
+        if (winTimer >= 2000)
+        {
+            SceneManager.LoadScene(0);
+        }
         frameTracker++;
         if (frameTracker >= 5000)
         {
@@ -46,12 +66,26 @@ public class ScoreTracker : MonoBehaviour
         {
             frameTracker = 0;
             dying = false;
+            deathCam.SetActive(true);
+            if ((animation1.GetComponent<SpriteRenderer>().flipX == true))
+            {
+                deathAnimation.GetComponent<SpriteRenderer>().flipX = true;
+            }
             Instantiate(deathAnimation, transform.position, transform.rotation);
-            Instantiate(deathCam, transform.position, transform.rotation);
-            Destroy(player);
+            animation1.SetActive(false);
+            animation2.SetActive(false);
+            animation3.SetActive(false);
+            animation4.SetActive(false);
+            animation5.SetActive(false);
+            camera.SetActive(false);
+            deathCam.SetActive(false);
+            Debug.Log("player dying");
+
+            Debug.Log(deadPlayer);
         }
-        if (frameTracker >= 1250)
+        if (frameTracker >= 1250 && deadPlayer) 
         {
+            Debug.Log("Resetting...");
             string currentSceneName = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currentSceneName);
         }
@@ -59,12 +93,12 @@ public class ScoreTracker : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Dropplet"))
+        if (other.gameObject.CompareTag("Dropplet") && !deadPlayer)
         {
             Destroy(other.gameObject);
             addScore();
         }
-        if (other.gameObject.CompareTag("Fountain") &&   (Input.GetKey("e")))
+        if (other.gameObject.CompareTag("Fountain") &&   (Input.GetKey("e")) && !deadPlayer)
         {
             if (frameTracker >= 5)
             {
@@ -79,6 +113,7 @@ public class ScoreTracker : MonoBehaviour
                     storedScoreText.text = "you win!";
                     inactiveFountain.GetComponent<SpriteRenderer>().enabled = false;
                     activeFountain.GetComponent<SpriteRenderer>().enabled = true;
+                    gameWon = true;
                 }
                 frameTracker = 0;
             }

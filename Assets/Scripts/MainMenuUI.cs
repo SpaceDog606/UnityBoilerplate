@@ -8,7 +8,7 @@ public class MainMenuUI : MonoBehaviour
        public void PlayGame()
     {
         //tells unit to load the main game scenes.
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Level Select");
     }
 
     public void Quit()
