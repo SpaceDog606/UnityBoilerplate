@@ -13,7 +13,7 @@ public class LevelSelecter : MonoBehaviour
     public void level2()
     {
         //tells unit to load the main game scenes.
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(4);
     }
     public void level3()
     {
